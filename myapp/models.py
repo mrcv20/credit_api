@@ -1,4 +1,4 @@
-from flaskapp import db
+from myapp import db
 
 
 class CreditRequest(db.Model):

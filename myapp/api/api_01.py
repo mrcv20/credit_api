@@ -1,7 +1,8 @@
-from flaskapp import db
+from myapp import db
+from myapp.celery import reverse
 from flask_restx import Namespace, Resource, fields, Api
 from flask import jsonify, request
-from flaskapp.models import CreditRequest, db
+from myapp.models import CreditRequest, db
 import uuid
 
 ns = Namespace('credito', description='REST API - SOLICITAÇÃO DE CRÉDITO')
@@ -45,21 +46,20 @@ recebe_response_credito = ns.model(
         )
     }
 )
-# fields for object serialization
-ticket_consulta = ns.model(
-    'Ticket do pedido', {
-        'ticket': fields.String(
-            required=True,
-            description='ticket gerado em formato de UUID4'
-        )
-    }
-)
-
+# # fields for object serialization
+# ticket_consulta = ns.model(
+#     'Ticket do pedido', {
+#         'ticket': fields.String(
+#             required=True,
+#             description='ticket gerado em formato de UUID4'
+#         )
+#     }
+# )
 
 @ns.route('/<ticket>', doc={"description": 'Verifica status da solicitação de cŕedito'})
 @ns.param('ticket', 'ticket do pedido')
 class ConsultaStatusCredito(Resource):
-    @ns.expect(ticket_consulta)
+    # @ns.expect(ticket_consulta)
     def get(self, ticket):
         ticket = CreditRequest.query.filter_by(ticket=ticket).first()
 
@@ -115,6 +115,12 @@ class SolicitaPedidoCredito(Resource):
 
         return jsonify({"message": "request enviado! "})
 
+@ns.route('/process/<name>')
+class Teste(Resource):
+    def get(self, name):
+        reverse.delay(name)
+
+        return " i sent async" 
 
 
 # vinculando o namespace a API restx

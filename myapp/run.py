@@ -1,4 +1,4 @@
-from flaskapp import create_app
+from myapp import create_app
 from .api import create_api
 
 app = create_app()

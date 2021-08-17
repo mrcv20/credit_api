@@ -41,16 +41,5 @@ def make_celery(app):
 app = create_app()
 celery = make_celery(app)
 
-# testando celery
-@app.route('/process/<name>')
-def process(name):
-    reverse.delay(name)
-
-@celery.task()
-def reverse(string):
-    return string[::-1]    
-
-
-
-
+# # testando celery
 
