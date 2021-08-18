@@ -14,7 +14,7 @@ Tecnologias:
 
 
 ## System Requirements
-  python 3.8, Redis server. MySQL Server
+  python 3.8, Redis server, MySQL Server
 
 
 ## Instalar Pacotes
@@ -22,7 +22,7 @@ Tecnologias:
 pip install -r requirements.txt
 ```
 
-## Ativando ambiente Virtual
+## Ativando ambiente virtual
 ```
 pip install virtualenv
 
@@ -43,11 +43,12 @@ db.create_all()
 ```
 export FLASK_APP=myapp/run.py
 export FLASK_DEBUG=True
+flask run
 ```
 
 
 
-- Endereco da documentacao: http://localhost:5000/api/v1/
+- Endereço da documentação: http://localhost:5000/api/v1/
 
 ### Comandos de WORKERS e de monitoring com flower
 ```
@@ -55,4 +56,4 @@ celery -A myapp.celery.celery worker --loglevel=info
 celery -A myapp.celery.celery flower --port=5566
 
 ```
-- Endereco do Monitoring com flower http://localhost:5566
+- Endereço do Monitoring com flower http://localhost:5566
