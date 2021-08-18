@@ -1,5 +1,3 @@
-import os
-import tempfile
 import pytest
 from myapp import create_app
 
@@ -14,13 +12,13 @@ def client():
             yield client
 
 def test_url_response_404(client):
-    response = client.get('/') # data
-    assert b'Not Found' in response.data # then    
+    response = client.get('/')
+    assert b'Not Found' in response.data 
 
 def test_for_empty_parameters(client):
-    response = client.post('http://127.0.0.1:5000/api/pedido-credito', json={}) # data
+    response = client.post('http://127.0.0.1:5000/api/v1/', json={})
     assert b'' in response.data # then
 
 def test_for_sucessfuly_query_request(client):
-    response = client.get('http://127.0.0.1:5000/api/consulta-pedidos') # data
-    assert b'\n' in response.data # then
+    response = client.get('http://127.0.0.1:5000/api/v1/') 
+    assert b'\n' in response.data
