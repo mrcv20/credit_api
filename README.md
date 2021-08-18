@@ -16,12 +16,6 @@ Tecnologias:
 ## System Requirements
   python 3.8, Redis server, MySQL Server
 
-
-## Instalar Pacotes
-```
-pip install -r requirements.txt
-```
-
 ## Ativando ambiente virtual
 ```
 pip install virtualenv
@@ -30,6 +24,14 @@ virtualenv {variavel}
 
 source {variavel}/bin/activate
 ```
+
+
+## Instalar Pacotes
+```
+pip install -r requirements.txt
+```
+
+
 ## Criação das tabelas e do banco de dados
 ```
 python 
