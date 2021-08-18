@@ -10,7 +10,7 @@ class CreditRequest(db.Model):
     )
     nome = db.Column(
         db.String(64),
-        unique=True,
+        unique=False,
     )
     idade = db.Column(                        
         db.Integer,
@@ -37,10 +37,5 @@ class CreditRequest(db.Model):
         unique=False
     )
 
-    def create(self, session, **kwargs):
-        new = self.__class__(**kwargs)
-        session.add(new)
-        return new
-
     def fetch_data(self, session, id):
-        return session.query(self.__class__).filter_by(id=_id).first()
+        return session.query(self.__class__).filter_by(id=id).first()

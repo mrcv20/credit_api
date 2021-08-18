@@ -55,3 +55,4 @@ celery -A myapp.celery.celery worker --loglevel=info
 celery -A myapp.celery.celery flower --port=5566
 
 ```
+- Endereco do Monitoring com flower http://localhost:5566

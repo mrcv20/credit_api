@@ -1,13 +1,13 @@
 from myapp import db
-from myapp.celery import  async_request, create_request
+from myapp.celery import  async_request, Querys
 from flask_restx import Namespace, Resource, fields, Api
-from flask import jsonify, request, json
+from flask import jsonify, request, json, sessions
 from myapp.models import CreditRequest, db
 import uuid
 from .schemas.serializers import ns, resposta_response_credito, pedido_credito
 
 @ns.route('/<ticket>') 
-@ns.doc(responses={404: 'Consulta not FOUND'}, params={'ticket': 'ID do pedido'})
+@ns.doc(params={'ticket': 'ID do pedido'})
 class ConsultaStatusCredito(Resource):
     # @ns.expect(ticket_consulta)
     def get(self, ticket):
@@ -32,22 +32,13 @@ class SolicitaPedidoCredito(Resource):
         session = db.session
         try:
             data = request.get_json()
-            create_request(session, data)
-            async_request.apply_async(args=[data], countdown=5)
+            Querys.create_request(session, data=data)
+            async_request.apply_async(args=[data], countdown=3)
             session.commit()
-            
-            print("Request Enviado!")
+            return "Pedido enviado!"
         except Exception as error:
             print(error)
-        last_ticket = CreditRequest.query.order_by(CreditRequest.id.desc()).first()
-        output = []
-        for data in last_ticket:
-            query_data = {}
-            query_data['id'] = data.id
-            query_data['status'] = data.status
-            query_data['ticket'] = data.ticket 
-            output.append(query_data)
-        return jsonify(last_ticket)
+        return jsonify({"message": 'sucesso'})
 
 
 # @ns.route('/consulta', doc={"description": 'consulta todas as solicitações de crédito'})   
