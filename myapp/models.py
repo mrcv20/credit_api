@@ -1,4 +1,5 @@
-from myapp import db
+from flask_restx import fields
+from myapp import db, ma
 
 
 class CreditRequest(db.Model):
@@ -28,7 +29,11 @@ class CreditRequest(db.Model):
         db.String(20),
         unique=False
     )
-    resultado_validacao_proposta = db.Column(
+    cpf = db.Column(
+        db.String(12),
+        unique=False
+    )
+    resultado_validacao_pedido = db.Column(
         db.String(20),
         unique=False
     )
@@ -37,5 +42,5 @@ class CreditRequest(db.Model):
         unique=False
     )
 
-    def fetch_data(self, session, id):
-        return session.query(self.__class__).filter_by(id=id).first()
+
+          
