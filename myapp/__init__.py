@@ -1,17 +1,15 @@
-from __future__ import absolute_import
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from celery import Celery
-import os
+from flask_marshmallow import Marshmallow
 
 db = SQLAlchemy()
-# basedir=path.dirname(os.path.realpath(__file__))
 
 def create_app():
     app = Flask(__name__)
     
     app.config['SECRET_KEY'] = 'senhasecretawasion'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:wasionbr@localhost/teste'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:36546655aS!@localhost/teste'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379'
     app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379'
@@ -40,6 +38,6 @@ def make_celery(app):
 
 app = create_app()
 celery = make_celery(app)
-
+ma = Marshmallow(app)
 # # testando celery
 
