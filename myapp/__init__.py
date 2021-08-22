@@ -9,10 +9,10 @@ def create_app():
     app = Flask(__name__)
     
     app.config['SECRET_KEY'] = 'senhasecretawasion'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:36546655aS!@localhost/teste'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:wasionbr@localhost/teste'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379'
-    app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379'
+    app.config['result_backend'] = 'redis://localhost:6379'
     db.init_app(app)
     
     with app.app_context():
@@ -23,7 +23,7 @@ def create_app():
 def make_celery(app):
     celery = Celery(
         'my-app',
-        backend=app.config['CELERY_RESULT_BACKEND'],
+        backend=app.config['result_backend'],
         broker=app.config['CELERY_BROKER_URL']
     )
     celery.conf.update(app.config)
