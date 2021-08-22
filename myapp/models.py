@@ -41,6 +41,8 @@ class CreditRequest(db.Model):
         db.String(20),
         unique=False
     )
-
+    
+    def __repr__(self):
+        return 'id %d' % self.id
 
           

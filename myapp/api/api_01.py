@@ -1,6 +1,6 @@
 from myapp import db
 from myapp.api.schemas.serializers import pedido_schema, pedidos_schema, status_schema, ticket_schema
-from myapp.celery import  async_request, Querys, session
+from myapp.celery import session, async_request ,create_request_credit
 from flask_restx import Namespace, Resource, fields, Api
 from flask import jsonify, request, json, sessions
 from myapp.models import CreditRequest, db
@@ -56,7 +56,6 @@ resposta_response_credito = ns.model(
 @ns.route('/<ticket>') 
 @ns.doc(params={'ticket': 'ID do pedido'})
 class ConsultaStatusCredito(Resource):
-   # @ns.expect(ticket_consulta)
     def get(self, ticket):
         ticket = CreditRequest.query.filter_by(ticket=ticket).first()
         return status_schema.dump(ticket)
@@ -65,22 +64,16 @@ class ConsultaStatusCredito(Resource):
 @ns.route('/', doc={"description": 'Cria uma solicitação de crédito'})
 class SolicitaPedidoCredito(Resource):
     @ns.expect(pedido_credito, validate=True)
-    def post(self):
-        
+    def post(self):      
         try:
             data = request.get_json()
-            Querys.create_request(data=data)
-            async_request.apply_async(args=[data], countdown=3)
-            session.commit()
-            session.close()
-            
-            return print(data)
+            # create_request_credit(data=data)
+            async_request.apply_async(args=[data], countdown=5)
+            return "ok"
         except Exception as error:
             print(error)
         finally:
-            ticket = session.query(CreditRequest).order_by(CreditRequest.id.desc()).first()
-            return jsonify(f"Pedido enviado, consulte o status com o ticket", ticket_schema.dump(ticket)) 
-
+            return jsonify(f"Pedido enviado, consulte o status com o ticket")
 # @ns.route('/consulta', doc={"description": 'consulta todas as solicitações de crédito'})   
 # @ns.param('consulta', 'consulta tudo')   
 # class ConsultaAllPedidos(Resource):
