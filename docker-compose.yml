@@ -1,0 +1,37 @@
+version: "2.0"
+services:
+  flask:
+    build: .
+    ports:
+      - "5000:5000"
+    container_name: myapi-rest  
+    links:
+      - redis
+      - db
+    expose:
+      - 5000
+
+
+  db:
+    image: mysql:8.0.26
+    ports:
+      - "30000:3306"
+    environment: 
+      MYSQL_ROOT_PASSWORD: root
+    volumes: 
+      - /db:/docker-entrypoiny.initdb.d/:ro 
+  
+  celery:
+    build: .
+    command: celery -A myapp.celery.celery worker --loglevel=INFO -E
+    command: celery -A myapp.celery.celery flower --port=5566
+    links:
+      - redis
+      - flask
+    volumes:
+      - .:/myapp
+      
+  redis:
+    image: "redis:alpine"
+    ports:
+      - '6379:6379'
