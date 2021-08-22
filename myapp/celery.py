@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.DEBUG)
 mylogger = logging.getLogger()
 
 
-engine = create_engine('mysql://root:wasionbr@localhost/teste')
+engine = create_engine('mysql://root:root@127.0.0.1/teste')
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -47,41 +47,4 @@ def async_request(data):
         mylogger.info(f"Idade do usuário: {data['idade']}, Valor solicitado pelo usuário: {data['valor_solicitado']}\n")
         session.commit()
     return "I sent request"    
-
-
-
-
-
-
-
-
-
-
-
-
-# class Querys():
-#     def create_request(data):
-#         novo_pedido = CreditRequest(ticket=str(uuid.uuid4()),
-#         id = id.uuid1(),
-#         nome=data['nome'],
-#         idade=data['idade'],
-#         valor_solicitado=data['valor_solicitado'],
-#         cpf=data['CPF'],
-#         status='Processando'
-#         )
-#         session.add(novo_pedido)
-#         return novo_pedido
-        
-#     def update_request(data):
-#         novo_pedido = CreditRequest(status=data['status'],
-#         resultado_validacao_pedido=data['resultado_validacao_pedido'],
-#         resultado_validacao_regras=data['resultado_validacao_regras']
-#         )
-#         session.add(novo_pedido)
-#         return novo_pedido
-
-
-
-
-
 
