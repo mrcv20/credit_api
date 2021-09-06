@@ -5,7 +5,7 @@
 
 API Rest que recebe pedidos de credito(em testes e desenvolvimento)
 
-Tecnologias:
+Tecnologias utilizadas:
 - Flask
 - MySQL
 - Redis
@@ -13,7 +13,7 @@ Tecnologias:
 - Pytest
 
 
-## System Requirements
+## Requisitos de sistema 
   python 3.8, Redis server, MySQL Server
 
 ## Ativando ambiente virtual
@@ -26,13 +26,13 @@ source {variavel}/bin/activate
 ```
 
 
-## Instalar Pacotes
+## Instalação das dependências
 ```
 pip install -r requirements.txt
 ```
 
 
-## Criação das tabelas e do banco de dados
+## Criação das tabelas no DB
 ```
 python 
 from myapp import create_app, db
