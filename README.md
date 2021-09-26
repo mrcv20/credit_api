@@ -10,7 +10,7 @@ Tecnologias utilizadas:
 - MySQL
 - Redis
 - Celery
-- Pytest
+- SQLite3
 
 
 ## Requisitos de sistema 
